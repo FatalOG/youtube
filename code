@@ -1,0 +1,293 @@
+import tkinter as tk                     
+from tkinter import filedialog
+from tkinter import ttk 
+from pytube import *
+# from tkinter.ttk import * 
+import time
+from tkinter import *
+import tkinter.font as font
+from tkinter import Tk, BOTH, Menu
+import os
+import sys
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+image_path = resource_path("app/img/app_icon.ico")
+image_path2 = resource_path("app/img/alert.ico")
+image_path3 = resource_path("app/img/check.ico")
+image_path4 = resource_path("app/img/about.ico")
+def fileopener():
+    folder_selected = filedialog.askdirectory()
+    folderPath.set(folder_selected)
+def bp():
+    try:
+        yt= YouTube(s.get())
+        video = yt.streams.filter(only_video = True).first()
+        out=video.download(filename=ss.get(),output_path=str(sx.get()))
+        win6 = tk.Toplevel()
+        win6.wm_title("Success")
+        win6.wm_geometry('400x400+%d+%d' % (x,y))
+        win6['background']='white'
+#         p2 = PhotoImage(file = 'C:/Users/User/Desktop/nue/check.png') 
+#         win6.iconphoto(False, p2) 
+        win6.iconbitmap(image_path3)
+        l = tk.Label(win6, text="""Successfully Installed
+"""+ss.get()+".mp4!",bg='white')
+        l['font']=myFont
+        l.grid(row=0, column=0)
+
+        b = ttk.Button(win6, text="Okay", command=win6.destroy)
+        b.grid(row=2, column=0)
+    except:
+        win61 = tk.Toplevel()
+        win61.wm_title("Error")
+        win61.wm_geometry('400x400+%d+%d' % (x,y))
+        win61['background']='black'
+#         p3 = PhotoImage(file = 'C:/Users/User/Desktop/nue/alert.png') 
+#         win61.iconphoto(False, p3) 
+        win61.iconbitmap(image_path2)
+        l = tk.Label(win61, text="A problem occured while downloading, try again.",bg='black',fg='white')
+        l['font']=myFont
+        l.grid(row=0, column=0)
+
+        b = ttk.Button(win61, text="Okay",command=win61.destroy)
+        b.grid(row=2, column=0)
+            
+    
+def bp2():
+    try:
+        yt= YouTube(s2.get())
+        video = yt.streams.filter(only_audio = True).first()
+        out=video.download(filename=ss2.get(),output_path=str(sx.get()))
+        win7 = tk.Toplevel()
+        win7.wm_title("Success")
+        win7.wm_geometry('400x400+%d+%d' % (x,y))
+        win7['background']='white'
+#         p4 = PhotoImage(file = 'C:/Users/User/Desktop/nue/check.png') 
+#         win7.iconphoto(False, p4) 
+        win7.iconbitmap(image_path3)
+        l = tk.Label(win7, text="""Successfully Installed
+"""+ss2.get()+".mp3!",bg='white')
+        l['font']=myFont
+        l.grid(row=0, column=0)
+
+        b = ttk.Button(win7, text="Okay", command=win7.destroy)
+        b.grid(row=2, column=0)
+    except:
+        win8 = tk.Toplevel()
+        win8.wm_title("Error")
+        win8.wm_geometry('400x400+%d+%d' % (x,y))
+        win8['background']='white'
+#         p5 = PhotoImage(file = 'C:/Users/User/Desktop/nue/alert.png') 
+#         win8.iconphoto(False, p5) 
+        win8.iconbitmap(image_path2)
+        l = tk.Label(win8, text="A problem occured while downloading, try again.",bg='white')
+        l['font']=myFont
+        l.grid(row=0, column=0)
+        
+        b = ttk.Button(win8, text="Okay", command=win8.destroy)
+        b.grid(row=2, column=0)
+def popab():
+    win = tk.Toplevel()
+    win.wm_title("About")
+    win.wm_geometry('400x400+%d+%d' % (x,y))
+    win['background']='white'
+#     p6 = PhotoImage(file = 'C:/Users/User/Desktop/nue/about.png') 
+#     win.iconphoto(False, p6) 
+    win.iconbitmap(image_path4)
+    l = tk.Label(win, text="This is a program to download youtube videos",bg='white')
+    l['font']=myFont
+    l.grid(row=0, column=0)
+
+    b = ttk.Button(win, text="Okay", command=win.destroy)
+    b.grid(row=2, column=0)
+def pophlp():
+    win2 = tk.Toplevel()
+    win2.wm_title("Help")
+    win2.wm_geometry('400x400+%d+%d' % (x,y))
+    win2['background']='white'
+#     p7 = PhotoImage(file = 'C:/Users/User/Desktop/nue/about.png') 
+#     win2.iconphoto(False, p7) 
+    win2.iconbitmap(image_path4)
+    l = tk.Label(win2, text="""There are 2 tabs that download both
+videos and audio seperately""",bg='white')
+    l['font']=myFont
+    l.grid(row=0, column=0)
+
+    b = ttk.Button(win2, text="Okay", command=win2.destroy)
+    b.grid(row=2, column=0)
+
+def showinfo():
+    showinfo("Window", "Hello World!")
+
+def title():
+    yt= YouTube(s2.get())
+    hrs=yt.length//3600
+    mins=(yt.length%3600)//60
+    sec = (yt.length%3600)%60
+    tile.config(text=("""Title: {}
+Views: {:,}
+Length is {} hours, {} minutes and {} seconds""".format(yt.title,yt.views,hrs,mins,sec)))
+# def og():
+#     try
+root = tk.Tk() 
+ws = root.winfo_screenwidth()
+hs = root.winfo_screenheight()
+x = (ws/2) - (800/2)
+y = (hs/2) - (800/2)
+root.title("YouTube Downloader") 
+root.geometry('800x800+%d+%d' % (x,y))
+root['background']='white'
+# p1 = PhotoImage(file = 'C:/Users/User/Desktop/ssssss/alert2.png') 
+# root.iconphoto(False, p1)
+# root.iconbitmap("C:\\Users\\User\\Desktop\\New folder (2)\\alet.ico")
+yz=StringVar()
+root.iconbitmap(image_path)
+tabControl = ttk.Notebook(root)
+tabControl.pack()
+myFont = font.Font(size=12)
+tab1 = tk.Frame(tabControl,width=850,height=850,bg='white') 
+tab2 = tk.Frame(tabControl,width=850,height=850,bg='white')
+tab3 = tk.Frame(tabControl,width=850,height=850,bg='white')
+tab1.pack(fill='both',expand=1)
+tab2.pack(fill='both',expand=1)
+tab3.pack(fill='both',expand=1)
+tabControl.add(tab1, text ='Download Video') 
+tabControl.add(tab2, text ='Download Audio')
+tabControl.add(tab3, text ='Download Video and Audio')
+tabControl.pack(fill ="both") 
+
+# Creating Menubar 
+menubar = Menu(root) 
+# Adding File Menu and commands 
+# file = Menu(menubar, tearoff = 0) 
+# menubar.add_cascade(label ='File', menu = file) 
+# file.add_command(label ='New File', command = None) 
+# file.add_command(label ='Open...', command = None) 
+# file.add_command(label ='Save', command = None) 
+# file.add_separator() 
+# file.add_command(label ='Exit', command = root.destroy) 
+#   
+# # Adding Edit Menu and commands 
+# edit = Menu(menubar, tearoff = 0) 
+# menubar.add_cascade(label ='Edit', menu = edit) 
+# edit.add_command(labedef combine_audio(vidname, audname, outname, fps=60):
+# edit.add_command(label ='Copy', command = None) 
+# edit.add_command(label ='Paste', command = None) 
+# edit.add_command(label ='Select All', command = None) 
+# edit.add_separator() 
+# edit.add_command(label ='Find...', command = None) 
+# edit.add_command(label ='Find again', command = None) 
+  
+# Adding Help Menu 
+help_ = Menu(menubar, tearoff = 0) 
+menubar.add_cascade(label ='Help', menu = help_) 
+help_.add_command(label ='Help', command = pophlp) 
+help_.add_separator() 
+help_.add_command(label ='About', command = popab)
+help_.add_command(label ='Close Program', command = root.destroy) 
+  
+# display Menu 
+root.config(menu = menubar) 
+folderPath=StringVar()
+label1=tk.Label(tab1, text ="""Link to video: """,bg='white',fg='black',)
+label1.grid(column = 0,  row = 0, padx = 10, pady = 10,sticky=W)
+
+s=tk.Entry(tab1,bg='white',fg='black')
+s.grid(column = 1,  row = 0, ipadx = 50, ipady = 0)
+
+label1x=tk.Label(tab1, text ="Name of file:",bg='white',fg='black')
+label1x.grid(column = 0,  row = 3, padx = 10, pady = 10,sticky=W)
+
+ss=tk.Entry(tab1,bg='white',fg='black')
+ss.grid(column = 1,  row = 3, ipadx = 50, ipady = 0)
+
+button1=tk.Button(tab1,text ="""Download""",bg='white',fg='black',command=bp)
+button1.grid(column = 0,  row = 4, padx = 0, pady = 0,)
+
+label1xx=tk.Label(tab1, text ="Location:",bg='white',fg='black')
+label1xx.grid(column = 0,  row = 2, padx = 10, pady = 10,sticky=W)
+
+sx=tk.Entry(tab1,textvariable=folderPath,bg='white',fg='black')
+sx.grid(column = 1,  row = 2, ipadx = 50, ipady = 0)
+
+button1x=tk.Button(tab1,text ="Browse..",
+bg='white',fg='black',command=fileopener)
+button1x.grid(column = 2,  row = 2, padx = 10, pady = 0,)
+# ttk.Entry(tab1.grid(column = 1,  row = 0, padx = 30, pady = 30))
+
+label2=tk.Label(tab2, text ="""Link to video: """,bg='white',fg='black')
+label2.grid(column = 0,  row = 0, padx = 10, pady = 10,sticky=W)
+
+s2=tk.Entry(tab2,bg='white',fg='black')
+s2.grid(column = 1,  row = 0, ipadx = 50, ipady = 0)
+yz.set(s2.get)
+label2x=tk.Label(tab2, text ="Name of file:",bg='white',fg='black')
+label2x.grid(column = 0,  row = 3, padx = 10, pady = 10,sticky=W)
+
+ss2=tk.Entry(tab2,bg='white',fg='black')
+ss2.grid(column = 1,  row = 3, ipadx = 50, ipady = 0)
+
+button2=tk.Button(tab2,text ="""Download""",bg='white',fg='black',command=bp2)
+button2.grid(column = 0,  row = 4, padx = 0, pady = 0,)
+
+label2xx=tk.Label(tab2, text ="Location:",bg='white',fg='black')
+label2xx.grid(column = 0,  row = 2, padx = 10, pady = 10,sticky=W)
+
+sx2=tk.Entry(tab2,textvariable=folderPath,bg='white',fg='black')
+sx2.grid(column = 1,  row = 2, ipadx = 50, ipady = 0)
+
+button2x=tk.Button(tab2,text ="Browse..",bg='white',fg='black',command=fileopener)
+button2x.grid(column = 2,  row = 2, padx = 10, pady = 0,)
+
+sxx2=tk.Label(tab2,text='Stats:',bg='white',fg='black')
+sxx2.grid(column = 0,  row = 5, ipadx = 10, ipady = 0,sticky=W)
+tile=tk.Label(tab2,text='',bg='white',fg='black')
+tile.grid(column = 1,  row = 6,columnspan=5,rowspan=5,sticky=W)
+# view2=tk.Label(tab2,text='Title',bg='white',fg='black')
+# view2.grid(column = 0,  row = 4, ipadx = 50, ipady = 0)
+# views2=tk.Label(tab2,text='',bg='white',fg='black')
+# views2.grid(column = 1,  row = 4, ipadx = 50, ipady = 0)
+# view3=tk.Label(tab2,text='Title',bg='white',fg='black')
+# view3.grid(column = 0,  row = 4, ipadx = 50, ipady = 0)
+# views3=tk.Label(tab2,text='',bg='white',fg='black')
+# views3.grid(column = 1,  row = 4, ipadx = 50, ipady = 0)
+button2xx=tk.Button(tab2,text ="Load Stats",bg='white',fg='black',command=title)
+button2xx.grid(column = 2,  row = 0, padx = 10, pady = 0,)
+
+
+
+label3=tk.Label(tab3, text ="""Link to video: """,bg='white',fg='black')
+label3.grid(column = 0,  row = 0, padx = 10, pady = 10,sticky=W)
+
+s3=tk.Entry(tab3,bg='white',fg='black')
+s3.grid(column = 1,  row = 0, ipadx = 50, ipady = 0)
+yz.set(s2.get)
+label3x=tk.Label(tab3, text ="Name of file:",bg='white',fg='black')
+label3x.grid(column = 0,  row = 3, padx = 10, pady = 10,sticky=W)
+
+ss2p=tk.Entry(tab3,bg='white',fg='black')
+ss2p.grid(column = 1,  row = 3, ipadx = 50, ipady = 0)
+
+button3=tk.Button(tab3,text ="""Download""",bg='white',fg='black')
+button3.grid(column = 0,  row = 4, padx = 0, pady = 0,)
+
+label3xx=tk.Label(tab3, text ="Location:",bg='white',fg='black')
+label3xx.grid(column = 0,  row = 2, padx = 10, pady = 10,sticky=W)
+
+sx3=tk.Entry(tab3,textvariable=folderPath,bg='white',fg='black')
+sx3.grid(column = 1,  row = 2, ipadx = 50, ipady = 0)
+
+button3x=tk.Button(tab3,text ="Browse..",bg='white',fg='black',command=fileopener)
+button3x.grid(column = 2,  row = 2, padx = 10, pady = 0,)
+
+sxx3=tk.Label(tab3,text='Stats:',bg='white',fg='black')
+sxx3.grid(column = 0,  row = 5, ipadx = 10, ipady = 0,sticky=W)
+tile2=tk.Label(tab3,text='',bg='white',fg='black')
+tile2.grid(column = 1,  row = 6,columnspan=5,rowspan=5,sticky=W)
+button3xx=tk.Button(tab3,text ="Load Stats",bg='white',fg='black',command=title)
+button3xx.grid(column = 2,  row = 0, padx = 10, pady = 0,)
+root.mainloop()
+
+
